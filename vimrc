@@ -61,6 +61,12 @@ let g:mapleader = ","
 " Fast saving
 nmap <leader>w :w!<cr>
 
+" Fast quit
+nmap <leader>q :q<cr>
+
+" Fast close
+nmap <leader>cs :CloseSession<cr>
+
 " :W sudo saves the file 
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
@@ -278,8 +284,8 @@ map <M-1> :NERDTree<cr>
 " Toogle tagbar
 map <M-2> :TagbarToggle<cr>
 
-" Toggle ConqueTerm
-map <M-3> :ConqueTerm bash<cr>
+" Toggle BufExplorer
+map <M-3> :BufExplorer<cr>
 """"""""""""""""""""""""""""""
 " => Plugins
 """"""""""""""""""""""""""""""
@@ -310,6 +316,8 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
 Plugin 'yssl/QFEnter'
+Plugin 'chase/vim-ansible-yaml'
+Plugin 'tpope/vim-surround'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -392,6 +400,8 @@ let g:go_fmt_command = "goimports"
 let g:go_disable_autoinstall = 0
 au BufRead,BufNewFile *.go set filetype=go
 
+au BufNewFile,BufRead *.yml set filetype=yaml 
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 let g:session_autoload = "no"
 let g:session_autosave = "no"
