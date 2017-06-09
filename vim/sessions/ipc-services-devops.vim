@@ -1,6 +1,6 @@
 " ~/Works/Phobos/vim/sessions/ipc-services-devops.vim:
 " Vim session script.
-" Created by session.vim 2.13.1 on 25 August 2016 at 14:57:43.
+" Created by session.vim 2.13.1 on 13 December 2016 at 23:48:42.
 " Open this file in Vim and run :source % to restore your session.
 
 set guioptions=agirLt
@@ -12,7 +12,7 @@ if exists('g:did_indent_on') != 1 | filetype indent on | endif
 if &background != 'dark'
 	set background=dark
 endif
-if !exists('g:colors_name') || g:colors_name != 'gruvbox' | colorscheme gruvbox | endif
+if !exists('g:colors_name') || g:colors_name != 'neodark' | colorscheme neodark | endif
 call setqflist([])
 let SessionLoad = 1
 if &cp | set nocp | endif
@@ -24,6 +24,7 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
+badd +318 ~/.vimrc
 badd +119 ysx-gce-dev-hosts
 badd +5 appsvc-deploy.yml
 badd +33 roles/appsvr/tasks/main.yml
@@ -128,7 +129,7 @@ badd +1 roles/logsvr/tasks/main.yml
 badd +18 roles/logsvr/files/deploy.sh
 badd +1 relaysvc-update.yml
 badd +7 ycloud/main.go
-badd +521 ycloud/src/ysx.com/ycloud/main.go
+badd +265 ycloud/src/ysx.com/ycloud/main.go
 badd +8 ansible-scripts/appsvc-deploy.yml
 badd +189 ycloud/bin/ycloud.yml
 badd +2 ansible-scripts/group_vars/all
@@ -169,7 +170,6 @@ badd +2 ansible-scripts/group_vars/tmsvc-cn-south
 badd +13 ansible-scripts/roles/tmsvr/tasks/main.yml
 badd +1 ansible-scripts/log-deploy.yml
 badd +1 ansible-scripts/roles/logsvr/tasks/main.yml
-badd +318 ~/.vimrc
 badd +89 ycloud/bin/WorldWide-asia-southeast-services-hosts
 badd +6 ansible-scripts/versvr-deploy.yml
 badd +44 ansible-scripts/roles/logsvr/files/deploy.sh
@@ -185,7 +185,7 @@ badd +36 ansible-scripts/roles/appsvr/templates/profile.en.j2
 badd +5 ansible-scripts/group_vars_bk/rabbitmq-cluster
 badd +1 ansible-scripts/group_vars_bk/appsvc-asia
 badd +15 ansible-scripts/group_vars_bk/appsvc
-badd +22 ansible-scripts/roles/appsvr/templates/profile.cn.j2
+badd +34 ansible-scripts/roles/appsvr/templates/profile.cn.j2
 badd +1 ansible-scripts/WorldWide-mongodb-replica-hosts
 badd +12 ansible-scripts/roles/mongodb-replica/tasks/main.yml
 badd +7 ansible-scripts/mongodb-replica-deploy.yml
@@ -216,7 +216,7 @@ badd +1 ansible-scripts/roles/versvr/templates/profile.j2
 badd +1 ansible-scripts/roles/versvr/templates/spvd.conf.j2
 badd +1 ansible-scripts/versvr-update.yml
 badd +7 ansible-scripts/roles/system-config/tasks/main.yml
-badd +20 ansible-scripts/roles/supervisor/tasks/main.yml
+badd +1 ansible-scripts/roles/supervisor/tasks/main.yml
 badd +8 ansible-scripts/system-config.yml
 badd +7 ansible-scripts/appsvc-restart.yml
 badd +5 ansible-scripts/restart-appsvc-all.sh
@@ -225,29 +225,26 @@ badd +6 ansible-scripts/supervisor-deploy.yml
 badd +123 ycloud/bin/WorldWide-us-west-services-hosts
 badd +37 ycloud/bin/WorldWide-supervisor-hosts
 badd +5 supervisor-restart.yml
-badd +0 ansible-scripts/supervisor-restart.yml
+badd +4 ansible-scripts/supervisor-restart.yml
 badd +20 gcloud/ww-services-host
 badd +1 ansible-scripts/roles/supervisor/files/supervisord.conf
+badd +0 __Tagbar__
+badd +6 cloud-platform/WorldWide-test/WorldWide-test-asia-east-log-service-hosts
+badd +1 ansible-scripts/roles/appsvr/templates/gen-mongodbs-ips.j2
+badd +0 ansible-scripts/roles/appsvr/templates/spvd.conf.j2
 args relaysvc-hosts
-edit ansible-scripts/roles/supervisor/tasks/main.yml
+edit ansible-scripts/roles/appsvr/templates/spvd.conf.j2
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
 1wincmd h
 wincmd w
-wincmd _ | wincmd |
-split
-1wincmd k
-wincmd w
 set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 31 + 104) / 209)
-exe '2resize ' . ((&lines * 30 + 29) / 59)
-exe 'vert 2resize ' . ((&columns * 177 + 104) / 209)
-exe '3resize ' . ((&lines * 24 + 29) / 59)
-exe 'vert 3resize ' . ((&columns * 177 + 104) / 209)
+exe 'vert 1resize ' . ((&columns * 35 + 106) / 213)
+exe 'vert 2resize ' . ((&columns * 177 + 106) / 213)
 argglobal
 enew
 " file NERD_tree_1
@@ -270,119 +267,16 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 25 - ((24 * winheight(0) + 15) / 30)
+let s:l = 1 - ((0 * winheight(0) + 15) / 31)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-25
-normal! 02|
-wincmd w
-argglobal
-edit ansible-scripts/supervisor-restart.yml
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let s:l = 4 - ((3 * winheight(0) + 12) / 24)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-4
-normal! 011|
-wincmd w
-exe 'vert 1resize ' . ((&columns * 31 + 104) / 209)
-exe '2resize ' . ((&lines * 30 + 29) / 59)
-exe 'vert 2resize ' . ((&columns * 177 + 104) / 209)
-exe '3resize ' . ((&lines * 24 + 29) / 59)
-exe 'vert 3resize ' . ((&columns * 177 + 104) / 209)
-tabedit ycloud/src/ysx.com/ycloud/main.go
-set splitbelow splitright
-wincmd _ | wincmd |
-vsplit
-wincmd _ | wincmd |
-vsplit
-2wincmd h
-wincmd w
-wincmd _ | wincmd |
-split
-1wincmd k
-wincmd w
-wincmd w
-set nosplitbelow
-set nosplitright
-wincmd t
-set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 54 + 104) / 209)
-exe '2resize ' . ((&lines * 7 + 29) / 59)
-exe 'vert 2resize ' . ((&columns * 108 + 104) / 209)
-exe '3resize ' . ((&lines * 47 + 29) / 59)
-exe 'vert 3resize ' . ((&columns * 108 + 104) / 209)
-exe 'vert 4resize ' . ((&columns * 45 + 104) / 209)
-argglobal
-enew
-" file NERD_tree_2
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal nofen
-wincmd w
-argglobal
-enew
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-wincmd w
-argglobal
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let s:l = 265 - ((39 * winheight(0) + 23) / 47)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-265
+1
 normal! 0
 wincmd w
-argglobal
-enew
-file __Tagbar__
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal nofen
-wincmd w
-3wincmd w
-exe 'vert 1resize ' . ((&columns * 54 + 104) / 209)
-exe '2resize ' . ((&lines * 7 + 29) / 59)
-exe 'vert 2resize ' . ((&columns * 108 + 104) / 209)
-exe '3resize ' . ((&lines * 47 + 29) / 59)
-exe 'vert 3resize ' . ((&columns * 108 + 104) / 209)
-exe 'vert 4resize ' . ((&columns * 45 + 104) / 209)
-tabnext 2
+exe 'vert 1resize ' . ((&columns * 35 + 106) / 213)
+exe 'vert 2resize ' . ((&columns * 177 + 106) / 213)
+tabnext 1
 if exists('s:wipebuf')
 "   silent exe 'bwipe ' . s:wipebuf
 endif
@@ -410,22 +304,9 @@ if !getbufvar(s:bufnr_save, '&modified')
   endif
 endif
 execute "cd" fnameescape(s:cwd_save)
-1resize 55|vert 1resize 31|2resize 30|vert 2resize 177|3resize 24|vert 3resize 177|
+1resize 31|vert 1resize 35|2resize 31|vert 2resize 177|
 1wincmd w
-tabnext 2
-let s:bufnr_save = bufnr("%")
-let s:cwd_save = getcwd()
-NERDTree ~/Works/ipc-services-devops/auto-deployment
-if !getbufvar(s:bufnr_save, '&modified')
-  let s:wipebuflines = getbufline(s:bufnr_save, 1, '$')
-  if len(s:wipebuflines) <= 1 && empty(get(s:wipebuflines, 0, ''))
-    silent execute 'bwipeout' s:bufnr_save
-  endif
-endif
-execute "cd" fnameescape(s:cwd_save)
-1resize 55|vert 1resize 54|2resize 7|vert 2resize 108|3resize 47|vert 3resize 108|4resize 55|vert 4resize 45|
-3wincmd w
-tabnext 2
+tabnext 1
 if exists('s:wipebuf')
   if empty(bufname(s:wipebuf))
 if !getbufvar(s:wipebuf, '&modified')

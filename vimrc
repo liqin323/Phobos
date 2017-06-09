@@ -47,8 +47,8 @@
 set history=500
 
 " Enable filetype plugins
-filetype plugin on
-filetype indent on
+"filetype plugin on
+"filetype indent on
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -67,6 +67,23 @@ nmap <leader>q :q<cr>
 " Fast close
 nmap <leader>cs :CloseSession<cr>
 
+" Save all open buffer
+nmap <leader>wa :wa!<cr>
+
+vmap <leader>y "+y
+vmap <leader>d "+d
+vmap <leader>p "+p
+vmap <leader>P "+P
+
+nmap <leader>y "+y
+nmap <leader>d "+d
+nmap <leader>p "+p
+nmap <leader>P "+P
+
+map <leader>+ :5winc +<cr>
+map <leader>- :5winc -<cr>
+map <leader>> :5winc ><cr>
+map <leader>< :5winc <<cr>
 " :W sudo saves the file 
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
@@ -144,16 +161,6 @@ set tm=500
 set foldcolumn=1
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Colors and Fonts
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Enable syntax highlighting
-syntax enable 
-
-try
-    colorscheme gruvbox
-catch
-endtr 
 
 set background=dark
 
@@ -243,24 +250,26 @@ imap <C-t> <Esc>:browse tabnew<CR>
 nmap <C-n> :tabnew<CR>
 imap <C-n> <Esc>:tabnew<CR>
 
+nmap OO O<Esc>j
+nmap oo o<Esc>k
+
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 " Switch GOPATH to the directory of the open buffer
 map <leader>gp :GoPath %:p:h<cr>
 
-map <leader>> <C-w>10>
-map <leader>< <C-w>10<
-map <leader>= <C-w>=
-map <leader>+ <C-w>10+
-map <leader>- <C-w>10-
+map <C-w><C-l> <C-w>10>
+map <C-w><C-h> <C-w>10<
+map <C-w><C-j> <C-w>10+
+map <C-w><C-k> <C-w>10-
 
 " Specify the behavior when switching between buffers 
-try
-  set switchbuf=useopen,usetab,newtab
-  set stal=2
-catch
-endtry
+"try
+"  set switchbuf=useopen,usetab,newtab
+"  set stal=2
+"catch
+"endtry
 
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -279,18 +288,18 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ 
 " => Misc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Toggle NERDTree
-map <M-1> :NERDTree<cr>
+map <leader>ne :NERDTree<cr>
 
 " Toogle tagbar
-map <M-2> :TagbarToggle<cr>
+map <leader>tb :TagbarToggle<cr>
 
 " Toggle BufExplorer
-map <M-3> :BufExplorer<cr>
+map <leader>be :BufExplorer<cr>
 """"""""""""""""""""""""""""""
 " => Plugins
 """"""""""""""""""""""""""""""
 set nocompatible              " be iMproved, required
-filetype on                  " required
+filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -300,29 +309,48 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'taglist.vim'
+
 Plugin 'a.vim'
+
 Plugin 'fatih/vim-go'
+
+Plugin 'SirVer/ultisnips'
+
+Plugin 'moll/vim-node'
+Plugin 'pangloss/vim-javascript'
+Plugin 'ternjs/tern_for_vim'
+
+Plugin 'scrooloose/nerdtree'
 Plugin 'bufexplorer.zip'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+Plugin 'majutsushi/tagbar'
+
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'Valloric/YouCompleteme'
-Plugin 'majutsushi/tagbar'
 Plugin 'tpope/vim-fugitive'
-Plugin 'Shougo/vimshell.vim'
-Plugin 'Shougo/vimproc.vim'
-Plugin 'scrooloose/nerdtree'
+
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
+
 Plugin 'yssl/QFEnter'
-Plugin 'chase/vim-ansible-yaml'
+
+Plugin 'pearofducks/ansible-vim'
+
 Plugin 'tpope/vim-surround'
+Plugin 'jiangmiao/auto-pairs'
+
+Plugin 'kylef/apiblueprint.vim'
+Plugin 'shime/vim-livedown'
+
+Plugin 'KeitaNakamura/neodark.vim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
-"filetype plugin on
+filetype plugin on
 "
 " Brief help
 " :PluginList       - lists configured plugins
@@ -398,21 +426,11 @@ endfunction
 let g:go_bin_path = "~/Program/go/bin"  
 let g:go_fmt_command = "goimports"
 let g:go_disable_autoinstall = 0
-au BufRead,BufNewFile *.go set filetype=go
+"au BufRead,BufNewFile *.go set filetype=go
 
-au BufNewFile,BufRead *.yml set filetype=yaml 
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 let g:session_autoload = "no"
 let g:session_autosave = "no"
-
-let g:tagbar_type_ansible = {
-    \ 'ctagstype' : 'ansible',
-    \ 'kinds' : [
-        \ 't:tasks'
-    \ ],
-    \ 'sort' : 0,
-    \ }
 
 function! ToggleFullScreen()
     call system("wmctrl -r :ACTIVE: -b toggle,fullscreen")
@@ -420,12 +438,64 @@ endfunction
 map <silent> <F11> :call ToggleFullScreen()<CR>
 
 "Toggle Menu and Toolbar
-set guioptions-=m
-set guioptions-=T
-map <silent> <F2> :if &guioptions =~# 'T' <Bar>
-        \set guioptions-=T <Bar>
-        \set guioptions-=m <bar>
-    \else <Bar>
-        \set guioptions+=T <Bar>
-        \set guioptions+=m <Bar>
-    \endif<CR>
+"set guioptions-=m
+"set guioptions-=T
+"map <silent> <F2> :if &guioptions =~# 'T' <Bar>
+"        \set guioptions-=T <Bar>
+"        \set guioptions-=m <bar>
+"    \else <Bar>
+"        \set guioptions+=T <Bar>
+"        \set guioptions+=m <Bar>
+"    \endif<CR>
+
+" ---------------------------------- "
+" Configure Ultisnip and YouCompleteMe
+" ---------------------------------- "
+"
+let g:UltiSnipsSnippetDirectories=['UltiSnips']
+let g:UltiSnipsSnippetsDir = '~/.vim/UltiSnips'
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-l>"
+let g:UltiSnipsJumpBackwardTrigger="<c-h>"
+
+" ---------------------------------- "
+" Configure YouCompleteMe
+" ---------------------------------- "
+"
+let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
+let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
+let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's keyword
+let g:ycm_complete_in_comments = 1 " Completion in comments
+let g:ycm_complete_in_strings = 1 " Completion in string
+
+"let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
+"let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
+
+map <F3> :YcmCompleter GoTo<CR>
+
+let g:javascript_plugin_jsdoc = 1
+let g:javascript_plugin_ngdoc = 1
+let g:javascript_plugin_flow = 1
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Colors and Fonts
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Enable syntax highlighting
+syntax on 
+
+let g:ansible_name_highlight = 'd'
+let g:ansible_attribute_highlight = "a"
+let g:ansible_extra_syntaxes = "sh.vim ruby.vim"
+let g:ansible_extra_keywords_highlight = 1
+
+let g:neodark#terminal_transparent = 1 " default: 0"
+let g:neodark#use_256color = 1
+
+
+let vim_markdown_preview_hotkey='<f5>'
+let vim_markdown_preview_toggle=2
+
+try
+    colorscheme neodark
+catch
+endtr 
